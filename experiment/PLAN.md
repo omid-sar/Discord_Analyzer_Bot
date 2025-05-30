@@ -6,6 +6,97 @@
 **Scope**: Toy example with ~100 lines of code total
 **Purpose**: Validate API connectivity and basic functionality before building complex features
 
+## 🔧 Prerequisites & Setup Guide
+
+### Section 0: Finding Discord IDs (Required First Step!)
+
+Before coding anything, you need to find the specific Discord IDs to test with.
+
+#### Step 1: Enable Discord Developer Mode
+1. Open Discord (desktop or web app)
+2. Go to **User Settings** (gear icon next to your username)
+3. Navigate to **Advanced** in the left sidebar
+4. Toggle **Developer Mode** to ON
+5. You'll now see "Copy ID" options when right-clicking items
+
+#### Step 2: Find Your Server/Guild ID
+1. In Discord, find the server you want to analyze
+2. Right-click on the **server name** (top-left of the server)
+3. Select **"Copy Server ID"**
+4. Save this as `DISCORD_GUILD_ID` in your `.env` file
+5. Example: `DISCORD_GUILD_ID=1377817987658158150`
+
+#### Step 3: Find Channel IDs to Test With
+1. Navigate to the channel you want to analyze
+2. Right-click on the **channel name** in the sidebar
+3. Select **"Copy Channel ID"**
+4. Save this as `TEST_CHANNEL_ID` in your `.env` file
+5. Example: `TEST_CHANNEL_ID=1234567890123456789`
+
+#### Step 4: Understanding Channel Types
+Different channels serve different purposes for customer analysis:
+
+- **#general**: Good for general user discussions and pain points
+- **#support**: Excellent for finding customer issues and problems
+- **#feedback**: Direct customer feedback and feature requests
+- **#bugs**: Technical issues users are experiencing
+- **#questions**: Direct questions that might indicate buying intent
+- **#introductions**: New user onboarding conversations
+
+#### Step 5: Choose Your Test Channel Strategically
+For customer analysis experiments, prioritize channels with:
+- ✅ **Active discussions** (recent messages)
+- ✅ **User problems/questions** (support, help channels)
+- ✅ **Product feedback** (feedback, suggestions)
+- ✅ **Community discussions** (general, off-topic)
+
+Avoid channels with:
+- ❌ Bot spam or automated messages
+- ❌ Admin-only announcements
+- ❌ Empty/inactive channels
+
+#### Step 6: Required Environment Variables
+Add these to your `.env` file:
+```bash
+# Discord Configuration
+DISCORD_BOT_TOKEN=your_bot_token_here
+DISCORD_GUILD_ID=your_server_id_here  # From Step 2
+TEST_CHANNEL_ID=your_channel_id_here  # From Step 3
+
+# New for this experiment
+ANTHROPIC_API_KEY=your_anthropic_key_here
+```
+
+#### Step 7: Testing Channel Access
+Before building the bot, manually verify:
+1. Your bot has permissions to read the target channel
+2. The channel has recent messages (within last few days)
+3. Messages contain actual user conversations (not just bot spam)
+
+#### Common Discord ID Patterns
+- **Server IDs**: 18-19 digit numbers (e.g., `1377817987658158150`)
+- **Channel IDs**: 18-19 digit numbers (e.g., `1234567890123456789`)
+- **User IDs**: 18-19 digit numbers (e.g., `987654321098765432`)
+- **Message IDs**: 18-19 digit numbers (e.g., `1122334455667788990`)
+
+#### Quick Verification Commands
+After setting up, you can verify IDs work by:
+```python
+# Quick test script to verify IDs
+import discord
+client = discord.Client()
+
+@client.event
+async def on_ready():
+    guild = client.get_guild(YOUR_GUILD_ID)
+    channel = client.get_channel(YOUR_CHANNEL_ID)
+    print(f"Guild: {guild.name if guild else 'Not found'}")
+    print(f"Channel: {channel.name if channel else 'Not found'}")
+    await client.close()
+
+client.run(YOUR_BOT_TOKEN)
+```
+
 ## 📁 Directory Structure 
 ```
 experiment/
