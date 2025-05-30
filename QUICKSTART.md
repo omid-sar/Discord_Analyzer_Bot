@@ -10,9 +10,13 @@ git clone <your-repo-url>
 cd letta_discord
 
 # Create virtual environment and install dependencies
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+python -m venv discord_bot
+source discord_bot/bin/activate # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+
+
+# 6. Test run the bot
+python main.py
 ```
 
 ## 2. Create Discord Bot (2 minutes)
